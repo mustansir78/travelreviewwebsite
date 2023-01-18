@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>11{{ review.item }}</h1>
+    <p>{{ item.type }}</p>
+    <p><img src="{{ item.photo.url }}" alt=""></p>
+    <p>{{ item.description }}</p>
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Review</button>
+    </form>
+{% endblock content %}

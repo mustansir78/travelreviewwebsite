@@ -1,0 +1,67 @@
+{% load tailwind_tags %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>MyReviews.com -
+    {% block title %}
+    {% endblock title %}
+    </title>
+
+{#    <script src="https://cdn.tailwindcss.com"></script>#}
+
+    {% tailwind_css %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="text-xl font-light">
+<!-- Nav bar -->
+<nav class="bg-gray-800">
+  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="relative flex h-16 items-center justify-between">
+      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex flex-shrink-0 items-center">
+            <a href="/hotels/"><span class="text-xl text-blue-500 font-semibold"><i class="fa-regular fa-face-smile"></i> MyReviews.com</span></a>
+        </div>
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            <a href="/hotels/" class="{% if "/hotels/" in request.path %}bg-gray-900{% endif %} text-white px-3 py-2 rounded-md text-sm font-medium"
+               {% if "/hotels/" in request.path %}aria-current="page"{% endif %}>Hotels</a>
+
+            <a href="/tourist-attractions/" class="{% if "/tourist-attractions/" in request.path %}bg-gray-900{% endif %} text-white px-3 py-2 rounded-md text-sm font-medium"
+               {% if "/tourist-attractions/" in request.path %}aria-current="page"{% endif %}>Tourist attractions</a>
+
+            <a href="/concerts/" class="{% if "/concerts/" in request.path %}bg-gray-900{% endif %} text-white px-3 py-2 rounded-md text-sm font-medium"
+               {% if "/concerts/" in request.path %}aria-current="page"{% endif %}>Concerts</a>
+
+            <a href="/amusement-parks/" class="{% if "/amusement-parks/" in request.path %}bg-gray-900{% endif %} text-white px-3 py-2 rounded-md text-sm font-medium"
+               {% if "/amusement-parks/" in request.path %}aria-current="page"{% endif %}>Amusement parks</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</nav>
+
+<!-- Body -->
+    <section class="container mx-auto max-w-7xl px-2 my-6">
+        {% block content %}
+        {% endblock content %}
+    </section>
+
+</body>
+</html>

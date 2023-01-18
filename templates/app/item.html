@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %} {{ item.name }} {% endblock title %}
+
+{% block content %}
+    <section class="pt-4">
+    <div class="flex flex-row flex-nowrap items-center gap-4 mt-2 mb-4">
+        <a class="text-4xl font-semibold" href="/item/{{ item.id }}">{{ item.name }}</a>
+        <span class="text-sm bg-gray-300 font-semibold rounded-xl px-2 py-1">{{ item.type }}</span>
+    </div>
+
+    <div class="flex flex-row flex-nowrap gap-6">
+        <div class="w-[512px] h-[324px]">
+            <img class="w-full h-full rounded-2xl" src="{{ item.photo.url }}" alt="">
+        </div>
+        <div class="flex flex-col w-2/3">
+            <div>{{ item.description }}</div>
+            <div class="mt-6 font-semibold">Reviews: {{ item.review_set.count }}</div>
+        </div>
+    </div>
+
+{#    <p><a href="{% url "add_review" item.pk %}">Write a review</a></p>#}
+
+    <!-- Review -->
+    <div class="mt-6 border-t pt-4">
+        <span class="text-2xl font-medium">Reviews</span>
+    </div>
+
+    <div class="flex flex-row">
+        <div class="w-2/3">
+        {% if  item.review_set.count > 0 %}
+            {% for review in item.review_set.all %}
+                <div class="my-6 flex flex-col gap-2">
+                    <div>{{ review.review }}</div>
+                    <div class="text-base text-gray-500"><span class="font-medium">{{ review.reviewed_by }}</span> < {{ review.reviewed_by_email }} > on {{ review.reviewed_on }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>No reviews yet.</div>
+        {% endif %}
+
+        </div>
+        <!-- Review Form -->
+
+        <div class="w-1/3">
+            <form action="" method="post">
+            {% csrf_token %}
+                <div class="grid grid-cols-1 gap-6">
+                    <label for="reviewed_by" class="block grid grid-cols-1 gap-2">
+                        <div class="text-gray-700">Reviewed by:</div>
+                        <input class="form-input w-full px-4 py-3 rounded-lg {% if form.email.errors %} border-red-500 {% endif %}" type="text" name="reviewed_by" value="{{ form.reviewed_by.value|default:'' }}" placeholder="Your name">
+                    </label>
+                    <label for="reviewed_by_email" class="block grid grid-cols-1 gap-2">
+                        <div class="text-gray-700">Email:</div>
+                        <input type="text" name="reviewed_by_email" value="{{ form.reviewed_by_email.value|default:'' }}" class="form-input w-full px-4 py-3 rounded-lg {% if form.email.errors %} border-red-500 {% endif %}" placeholder="Your email">
+                    </label>
+                    <label for="review" class="block grid grid-cols-1 gap-2">
+                        <div class="text-gray-700">Review:</div>
+                        <textarea name="review" id="review" rows="5" class="form-textarea w-full px-4 py-3 rounded-lg {% if form.email.errors %} border-red-500 {% endif %}" placeholder="Write your review here.">{{ form.review.value|default:'' }}</textarea>
+                    </label>
+                    <button class="bg-blue-600 hover:bg-blue-600/80 px-4 py-3 rounded-lg text-gray-50 font-medium" type="submit">Post Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    </section>
+{% endblock content %}
